@@ -1,6 +1,6 @@
 package clean.internet.restapi.repository;
 
-import clean.internet.restapi.model.row.CrwDcData;
+import clean.internet.restapi.model.raw.CrwDcData;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
