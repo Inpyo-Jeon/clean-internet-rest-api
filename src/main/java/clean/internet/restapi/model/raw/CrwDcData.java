@@ -1,4 +1,4 @@
-package clean.internet.restapi.model.row;
+package clean.internet.restapi.model.raw;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
