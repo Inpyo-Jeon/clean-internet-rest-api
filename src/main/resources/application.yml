@@ -4,6 +4,8 @@ spring:
     url: jdbc:mariadb://220.230.125.26:3306/clean_web_culture
     username: crw
     password: crw
+    hikari:
+      max-lifetime: 1800000
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,6 +18,8 @@ spring:
     url: jdbc:mariadb://220.230.125.26:3306/clean_web_culture
     username: crw
     password: crw
+    hikari:
+      max-lifetime: 1800000
   jpa:
     hibernate:
       ddl-auto: update
