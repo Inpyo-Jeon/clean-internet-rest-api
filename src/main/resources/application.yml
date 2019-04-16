@@ -1,0 +1,21 @@
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mariadb://220.230.125.26:3306/clean_web_culture
+    username: crw
+    password: crw
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+---
+
+spring:
+  profiles: live
+  datasource:
+    url: jdbc:mariadb://220.230.125.26:3306/clean_web_culture
+    username: crw
+    password: crw
+  jpa:
+    hibernate:
+      ddl-auto: update
