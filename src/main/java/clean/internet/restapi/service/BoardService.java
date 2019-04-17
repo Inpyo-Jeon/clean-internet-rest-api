@@ -30,7 +30,7 @@ public class BoardService {
                 item -> {
                     BoardData boardData = new BoardData();
                     BeanUtils.copyProperties(item, boardData);
-                    boardData.setConcatContent(boardData.getTitle() + " // " + boardData.getContent());
+                    boardData.setConcatContent(boardData.getTitle() + " " + boardData.getContent());
                     boardDataList.add(boardData);
                 }
         );
