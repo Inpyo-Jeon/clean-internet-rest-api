@@ -2,6 +2,7 @@ package clean.internet.restapi.model.raw;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,10 +15,9 @@ public class CrwDcData {
     private String title;
     private Date date;
     private String content;
+    private String contentTok;
     private String category;
-    private String categoryDetail;
     private String board;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -56,6 +56,16 @@ public class CrwDcData {
         this.content = content;
     }
 
+    @Column(name = "content_tok")
+    @Type(type = "text")
+    public String getContentTok() {
+        return contentTok;
+    }
+
+    public void setContentTok(String contentTok) {
+        this.contentTok = contentTok;
+    }
+
     @Column(name = "category")
     public String getCategory() {
         return category;
@@ -65,14 +75,6 @@ public class CrwDcData {
         this.category = category;
     }
 
-    @Column(name = "category_detail")
-    public String getCategoryDetail() {
-        return categoryDetail;
-    }
-
-    public void setCategoryDetail(String categoryDetail) {
-        this.categoryDetail = categoryDetail;
-    }
 
     @Column(name = "board")
     public String getBoard() {
