@@ -5,7 +5,7 @@ spring:
     username: crw
     password: crw
     hikari:
-      max-lifetime: 1800000
+      max-lifetime: 300000
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,10 +16,10 @@ spring:
   profiles: live
   datasource:
     url: jdbc:mariadb://220.230.125.26:3306/clean_web_culture
-    username: crw
+    username: crwm
     password: crw
     hikari:
-      max-lifetime: 1800000
+      max-lifetime: 300000
   jpa:
     hibernate:
       ddl-auto: update
