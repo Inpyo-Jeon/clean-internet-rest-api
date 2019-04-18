@@ -26,10 +26,15 @@ public class GraphController {
         String data = "";
 
         switch (graphType) {
-            case DAY: {
-                data = graphService.getLineGraphDataForPeriod(begin, end);
+            case DAY:
+                data = graphService.getLineGraphDataForDay(begin, end);
                 break;
-            }
+            case MONTH:
+                data = graphService.getLineGraphDataForMonth(begin, end);
+                break;
+            case YEAR:
+                data = graphService.getLineGraphDataForYear(begin, end);
+                break;
         }
 
         return data;

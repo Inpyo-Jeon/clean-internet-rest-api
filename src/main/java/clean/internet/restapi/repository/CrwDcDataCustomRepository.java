@@ -19,23 +19,40 @@ public class CrwDcDataCustomRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public List<CrwLineGraph> getLineGraphDataForPeriod(Date begin, Date end) {
-        Query query = em.createNativeQuery("SELECT DATE_FORMAT(DATE, '%Y%m%d') AS dateTime, COUNT(*) AS totalCount FROM crw_dc_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m%d') ORDER BY DATE DESC");
+    public List<CrwLineGraph> getLineGraphDataForDay(Date begin, Date end) {
+        Query query = em.createNativeQuery("SELECT substring(date, 1, 10) AS dateTime, COUNT(*) AS totalCount FROM crw_dc_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m%d') ORDER BY DATE DESC");
+        query = setAliasForPeriod(query, begin, end);
 
-        //Scalar로 할 경우, Object와 getter/setter 이름 맞춰줘야한다.
-        //COUNT, DATE같은 예약어는 안된다.
-        //TODO : Deprecated된 클래스와 메서드를 대체해야 한다.
-        query.unwrap(SQLQuery.class)
-                .addScalar("dateTime", StringType.INSTANCE)
-                .addScalar("totalCount", BigIntegerType.INSTANCE)
-                .setParameter("begin", begin)
-                .setParameter("end", end)
-                .setResultTransformer(Transformers.aliasToBean(CrwLineGraph.class));
+        List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
+        return items;
+    }
+
+    public List<CrwLineGraph> getLineGraphDataForMonth(Date begin, Date end) {
+        Query query = em.createNativeQuery("SELECT substring(date, 1, 7) AS dateTime, count(*) AS totalCount FROM crw_dc_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m') ORDER BY date DESC");
+        query = setAliasForPeriod(query, begin, end);
+
+        List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
+        return items;
+    }
+
+    public List<CrwLineGraph> getLineGraphDataForYear(Date begin, Date end) {
+        Query query = em.createNativeQuery("SELECT substring(date, 1, 4) AS dateTime, count(*) AS totalCount FROM crw_dc_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y') ORDER BY date DESC");
+        query = setAliasForPeriod(query, begin, end);
 
         List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
         return items;
     }
 
 
-
+    public Query setAliasForPeriod(Query query, Date begin, Date end) {
+        //TODO : Deprecated된 클래스와 메서드를 대체해야 한다.
+        //Scalar로 할 경우, Object와 getter/setter 이름 맞춰줘야한다.
+        //COUNT, DATE같은 예약어는 안된다.
+        return query.unwrap(SQLQuery.class)
+                .addScalar("dateTime", StringType.INSTANCE)
+                .addScalar("totalCount", BigIntegerType.INSTANCE)
+                .setParameter("begin", begin)
+                .setParameter("end", end)
+                .setResultTransformer(Transformers.aliasToBean(CrwLineGraph.class));
+    }
 }

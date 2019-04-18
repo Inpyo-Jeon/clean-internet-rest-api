@@ -22,13 +22,38 @@ public class GraphService {
     @Autowired
     ObjectMapper mapper;
 
-    public String getLineGraphDataForPeriod(String b, String e) throws IOException, ParseException {
-
+    public String getLineGraphDataForDay(String b, String e) throws IOException, ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date begin = sdf.parse(b);
         Date end = sdf.parse(e);
 
-        List<CrwLineGraph> crwLineGraphList = crwDcDataCustomRepository.getLineGraphDataForPeriod(begin, end);
+        List<CrwLineGraph> crwLineGraphList = crwDcDataCustomRepository.getLineGraphDataForDay(begin, end);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        mapper.writeValue(out, crwLineGraphList);
+
+        return new String(out.toByteArray());
+    }
+
+    public String getLineGraphDataForMonth(String b, String e) throws ParseException, IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date begin = sdf.parse(b);
+        Date end = sdf.parse(e);
+
+        List<CrwLineGraph> crwLineGraphList = crwDcDataCustomRepository.getLineGraphDataForMonth(begin, end);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        mapper.writeValue(out, crwLineGraphList);
+
+        return new String(out.toByteArray());
+    }
+
+    public String getLineGraphDataForYear(String b, String e) throws ParseException, IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date begin = sdf.parse(b);
+        Date end = sdf.parse(e);
+
+        List<CrwLineGraph> crwLineGraphList = crwDcDataCustomRepository.getLineGraphDataForYear(begin, end);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         mapper.writeValue(out, crwLineGraphList);
