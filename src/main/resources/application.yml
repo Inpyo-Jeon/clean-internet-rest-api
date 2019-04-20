@@ -5,6 +5,7 @@ common:
       webhook-url: "https://hooks.slack.com/services/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"
       channel-name: "error"
 
+---
 spring:
   profiles: dev
   datasource:
@@ -18,7 +19,6 @@ spring:
       ddl-auto: update
 
 ---
-
 spring:
   profiles: live
   datasource:
