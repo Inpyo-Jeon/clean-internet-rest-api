@@ -1,3 +1,10 @@
+common:
+  notification:
+    exception:
+      color: "#36a64f"
+      webhook-url: "https://hooks.slack.com/services/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"
+      channel-name: "error"
+
 spring:
   profiles: dev
   datasource:
