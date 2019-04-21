@@ -8,28 +8,28 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "crw_dc_data")
-public class CrwDcData {
+@Table(name = "crw_data")
+public class CrwData {
 
-    private long no;
+    private int no;
     private String title;
     private Date date;
     private String content;
-    private String contentTok;
     private String category;
     private String board;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getNo() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "NO", columnDefinition = "INT(11)")
+    public int getNo() {
         return no;
     }
 
-    public void setNo(long no) {
+    public void setNo(int no) {
         this.no = no;
     }
 
-    @Column(name = "title")
+    @Column(name = "TITLE", columnDefinition = "VARCHAR(200)")
     public String getTitle() {
         return title;
     }
@@ -38,7 +38,7 @@ public class CrwDcData {
         this.title = title;
     }
 
-    @Column(name = "date")
+    @Column(name = "DATE", columnDefinition = "DATE")
     public Date getDate() {
         return date;
     }
@@ -47,7 +47,7 @@ public class CrwDcData {
         this.date = date;
     }
 
-    @Column(name = "content")
+    @Column(name = "CONTENT", columnDefinition = "TEXT")
     public String getContent() {
         return content;
     }
@@ -56,17 +56,7 @@ public class CrwDcData {
         this.content = content;
     }
 
-    @Column(name = "content_tok")
-    @Type(type = "text")
-    public String getContentTok() {
-        return contentTok;
-    }
-
-    public void setContentTok(String contentTok) {
-        this.contentTok = contentTok;
-    }
-
-    @Column(name = "category")
+    @Column(name = "CATEGORY", columnDefinition = "CHAR(1)")
     public String getCategory() {
         return category;
     }
@@ -75,8 +65,7 @@ public class CrwDcData {
         this.category = category;
     }
 
-
-    @Column(name = "board")
+    @Column(name = "BOARD", columnDefinition = "CHAR(1)")
     public String getBoard() {
         return board;
     }

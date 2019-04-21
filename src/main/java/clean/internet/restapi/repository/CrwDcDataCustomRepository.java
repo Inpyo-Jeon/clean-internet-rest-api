@@ -20,7 +20,7 @@ public class CrwDcDataCustomRepository {
     private EntityManager em;
 
     public List<CrwLineGraph> getLineGraphDataForDay(Date begin, Date end) {
-        Query query = em.createNativeQuery("SELECT substring(date, 1, 10) AS dateTime, COUNT(*) AS totalCount FROM crw_dc_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m%d') ORDER BY DATE DESC");
+        Query query = em.createNativeQuery("SELECT substring(date, 1, 10) AS dateTime, COUNT(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m%d') ORDER BY DATE DESC");
         query = setAliasForPeriod(query, begin, end);
 
         List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
@@ -28,7 +28,7 @@ public class CrwDcDataCustomRepository {
     }
 
     public List<CrwLineGraph> getLineGraphDataForMonth(Date begin, Date end) {
-        Query query = em.createNativeQuery("SELECT substring(date, 1, 7) AS dateTime, count(*) AS totalCount FROM crw_dc_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m') ORDER BY date DESC");
+        Query query = em.createNativeQuery("SELECT substring(date, 1, 7) AS dateTime, count(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m') ORDER BY date DESC");
         query = setAliasForPeriod(query, begin, end);
 
         List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
@@ -36,7 +36,7 @@ public class CrwDcDataCustomRepository {
     }
 
     public List<CrwLineGraph> getLineGraphDataForYear(Date begin, Date end) {
-        Query query = em.createNativeQuery("SELECT substring(date, 1, 4) AS dateTime, count(*) AS totalCount FROM crw_dc_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y') ORDER BY date DESC");
+        Query query = em.createNativeQuery("SELECT substring(date, 1, 4) AS dateTime, count(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y') ORDER BY date DESC");
         query = setAliasForPeriod(query, begin, end);
 
         List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
