@@ -1,6 +1,7 @@
 package clean.internet.restapi.service;
 
 import clean.internet.restapi.model.raw.CrwLineGraph;
+import clean.internet.restapi.model.raw.CrwPieGraph;
 import clean.internet.restapi.repository.CrwDcDataCustomRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,20 @@ public class GraphService {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         mapper.writeValue(out, crwLineGraphList);
+
+        return new String(out.toByteArray());
+    }
+
+    public String getPieGraphDataForMonth(String b, String e) throws IOException {
+        Date begin = Date.from(getFirstDayOfMonth(b)
+                .atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        Date end = Date.from(getLastDayOfMonth(e)
+                .atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        List<CrwPieGraph> crwPieGraphList = crwDcDataCustomRepository.getPieGraphDataForMonth(begin, end);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        mapper.writeValue(out, crwPieGraphList);
 
         return new String(out.toByteArray());
     }
