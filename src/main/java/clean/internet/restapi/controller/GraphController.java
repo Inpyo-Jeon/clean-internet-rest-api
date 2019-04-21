@@ -1,7 +1,7 @@
 package clean.internet.restapi.controller;
 
 import ch.qos.logback.classic.Logger;
-import clean.internet.restapi.common.LineGraphType;
+import clean.internet.restapi.common.PeriodType;
 import clean.internet.restapi.service.GraphService;
 import clean.internet.restapi.util.NotifierSlack;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 
 @RestController
@@ -36,10 +38,10 @@ public class GraphController {
 
         try {
 
-            LineGraphType graphType = LineGraphType.find(type);
+            PeriodType periodType = PeriodType.find(type);
             String data = "";
 
-            switch (graphType) {
+            switch (periodType) {
                 case DAY:
                     data = graphService.getLineGraphDataForDay(begin, end);
                     break;
@@ -59,6 +61,42 @@ public class GraphController {
             responseEntity = ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Sorry, Graph Line Error");
+
+            logger.error("error : ", exception);
+            notifierSlack.notifySend(ExceptionUtils.getRootCauseMessage(exception), ExceptionUtils.getStackTrace(exception));
+        }
+
+        return responseEntity;
+    }
+
+
+    @RequestMapping(value = "/data/graph/pie")
+    public ResponseEntity pieGraph(
+            @RequestParam(value = "type") String type
+            , @RequestParam(value = "begin") String begin
+            , @RequestParam(value = "end") String end) throws IOException {
+
+        ResponseEntity responseEntity;
+
+        try {
+
+            PeriodType periodType = PeriodType.find(type);
+            String data = "";
+
+            switch (periodType) {
+                case MONTH:
+                    data = graphService.getPieGraphDataForMonth(begin, end);
+                    break;
+            }
+
+            responseEntity = ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(data);
+        } catch (Exception exception) {
+
+            responseEntity = ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Sorry, Graph pie Error");
 
             logger.error("error : ", exception);
             notifierSlack.notifySend(ExceptionUtils.getRootCauseMessage(exception), ExceptionUtils.getStackTrace(exception));

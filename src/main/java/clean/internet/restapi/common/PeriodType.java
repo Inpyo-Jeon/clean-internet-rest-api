@@ -1,12 +1,12 @@
 package clean.internet.restapi.common;
 
-public enum LineGraphType {
+public enum PeriodType {
 
     DAY("day"), WEEK("week"), MONTH("month"), YEAR("year");
 
     private String type;
 
-    LineGraphType(String type) {
+    PeriodType(String type) {
         this.type = type;
     }
 
@@ -14,8 +14,8 @@ public enum LineGraphType {
         return this.type;
     }
 
-    public static LineGraphType find(String attr) {
-        for (LineGraphType item : values()) {
+    public static PeriodType find(String attr) {
+        for (PeriodType item : values()) {
             if (item.type.equals(attr)) {
                 return item;
             }
