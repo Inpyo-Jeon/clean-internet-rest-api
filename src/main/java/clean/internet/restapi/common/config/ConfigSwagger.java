@@ -5,20 +5,38 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
 public class ConfigSwagger {
 
     @Bean
-    public Docket api() {
+    public Docket api(ApiInfo apiInfo) {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(apiInfo);
+    }
+
+    @Bean
+    ApiInfo apiInfo() {
+        return new ApiInfo(
+                "Rest-API",
+                "Clean Internet Culture - Restful API",
+                "0.1",
+                null,
+                new Contact("Inpyo Jeon", null, "inpyo.developer@gmail.com"),
+                null,
+                null,
+                Collections.emptyList());
     }
 }
