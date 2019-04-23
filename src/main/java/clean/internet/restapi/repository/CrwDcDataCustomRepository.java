@@ -21,7 +21,7 @@ public class CrwDcDataCustomRepository {
     private EntityManager em;
 
     public List<CrwLineGraph> getLineGraphDataForDay(Date begin, Date end) {
-        Query query = em.createNativeQuery("SELECT DATE_FORMAT(DATE, '%Y%m%d') AS dateTime, COUNT(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m%d') ORDER BY DATE DESC");
+        Query query = em.createNativeQuery("SELECT DATE_FORMAT(DATE, '%Y-%m-%d') AS dateTime, COUNT(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m%d') ORDER BY DATE DESC");
         query = setAliasLineGraphForPeriod(query, begin, end);
 
         List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
@@ -29,7 +29,7 @@ public class CrwDcDataCustomRepository {
     }
 
     public List<CrwLineGraph> getLineGraphDataForMonth(Date begin, Date end) {
-        Query query = em.createNativeQuery("SELECT DATE_FORMAT(DATE, '%Y%m') AS dateTime, count(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m') ORDER BY date DESC");
+        Query query = em.createNativeQuery("SELECT DATE_FORMAT(DATE, '%Y-%m') AS dateTime, count(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY DATE_FORMAT(DATE, '%Y%m') ORDER BY date DESC");
         query = setAliasLineGraphForPeriod(query, begin, end);
 
         List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
@@ -45,7 +45,7 @@ public class CrwDcDataCustomRepository {
     }
 
     public List<CrwPieGraph> getPieGraphDataForMonth(Date begin, Date end){
-        Query query = em.createNativeQuery("SELECT DATE_FORMAT(DATE, '%Y%m') AS dateTime, COUNT(IF(category='1', category, null)) AS 'yes', COUNT(IF(category='0', category, null)) AS 'no' FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY dateTime ORDER BY dateTime DESC");
+        Query query = em.createNativeQuery("SELECT DATE_FORMAT(DATE, '%Y-%m') AS dateTime, COUNT(IF(category='1', category, null)) AS 'yes', COUNT(IF(category='0', category, null)) AS 'no' FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY dateTime ORDER BY dateTime DESC");
         query = setAliasPieGraphForPeriod(query, begin, end);
 
         List<CrwPieGraph> items = (List<CrwPieGraph>) query.getResultList();
