@@ -2,7 +2,7 @@ package clean.internet.restapi.service;
 
 import clean.internet.restapi.model.raw.CrwLineGraph;
 import clean.internet.restapi.model.raw.CrwPieGraph;
-import clean.internet.restapi.repository.CrwDcDataCustomRepository;
+import clean.internet.restapi.repository.CrwDataCustomRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 public class GraphService {
 
     @Autowired
-    CrwDcDataCustomRepository crwDcDataCustomRepository;
+    CrwDataCustomRepository crwDataCustomRepository;
 
     @Autowired
     ObjectMapper mapper;
@@ -35,7 +35,7 @@ public class GraphService {
         Date begin = sdf.parse(b);
         Date end = sdf.parse(e);
 
-        List<CrwLineGraph> crwLineGraphList = crwDcDataCustomRepository.getLineGraphDataForDay(begin, end);
+        List<CrwLineGraph> crwLineGraphList = crwDataCustomRepository.getLineGraphDataForDay(begin, end);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         mapper.writeValue(out, crwLineGraphList);
@@ -50,7 +50,7 @@ public class GraphService {
         Date end = Date.from(getLastDayOfMonth(e)
                 .atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        List<CrwLineGraph> crwLineGraphList = crwDcDataCustomRepository.getLineGraphDataForMonth(begin, end);
+        List<CrwLineGraph> crwLineGraphList = crwDataCustomRepository.getLineGraphDataForMonth(begin, end);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         mapper.writeValue(out, crwLineGraphList);
@@ -65,7 +65,7 @@ public class GraphService {
         Date end = Date.from(getLastDayOfYear(e)
                 .atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        List<CrwLineGraph> crwLineGraphList = crwDcDataCustomRepository.getLineGraphDataForYear(begin, end);
+        List<CrwLineGraph> crwLineGraphList = crwDataCustomRepository.getLineGraphDataForYear(begin, end);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         mapper.writeValue(out, crwLineGraphList);
@@ -80,7 +80,7 @@ public class GraphService {
         Date end = Date.from(getLastDayOfMonth(e)
                 .atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        List<CrwPieGraph> crwPieGraphList = crwDcDataCustomRepository.getPieGraphDataForMonth(begin, end);
+        List<CrwPieGraph> crwPieGraphList = crwDataCustomRepository.getPieGraphDataForMonth(begin, end);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         mapper.writeValue(out, crwPieGraphList);
 

@@ -2,7 +2,7 @@ package clean.internet.restapi.repository;
 
 import clean.internet.restapi.model.raw.CrwLineGraph;
 import clean.internet.restapi.model.raw.CrwPieGraph;
-import org.hibernate.SQLQuery;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.BigIntegerType;
 import org.hibernate.type.StringType;
@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public class CrwDcDataCustomRepository {
+public class CrwDataCustomRepository {
 
     @PersistenceContext
     private EntityManager em;
@@ -52,11 +52,9 @@ public class CrwDcDataCustomRepository {
         return items;
     }
 
+    @SuppressWarnings("deprecation")
     public Query setAliasLineGraphForPeriod(Query query, Date begin, Date end) {
-        //TODO : Deprecated된 클래스와 메서드를 대체해야 한다.
-        //Scalar로 할 경우, Object와 getter/setter 이름 맞춰줘야한다.
-        //COUNT, DATE같은 예약어는 안된다.
-        return query.unwrap(SQLQuery.class)
+        return query.unwrap(NativeQuery.class)
                 .addScalar("dateTime", StringType.INSTANCE)
                 .addScalar("totalCount", BigIntegerType.INSTANCE)
                 .setParameter("begin", begin)
@@ -64,8 +62,9 @@ public class CrwDcDataCustomRepository {
                 .setResultTransformer(Transformers.aliasToBean(CrwLineGraph.class));
     }
 
+    @SuppressWarnings("deprecation")
     public Query setAliasPieGraphForPeriod(Query query, Date begin, Date end) {
-        return query.unwrap(SQLQuery.class)
+        return query.unwrap(NativeQuery.class)
                 .addScalar("dateTime", StringType.INSTANCE)
                 .addScalar("yes", BigIntegerType.INSTANCE)
                 .addScalar("no", BigIntegerType.INSTANCE)
