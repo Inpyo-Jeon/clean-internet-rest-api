@@ -1,6 +1,6 @@
 package clean.internet.restapi.common.config;
 
-import clean.internet.restapi.common.intercepter.InterceptorApiToken;
+import clean.internet.restapi.common.interceptor.InterceptorApiToken;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

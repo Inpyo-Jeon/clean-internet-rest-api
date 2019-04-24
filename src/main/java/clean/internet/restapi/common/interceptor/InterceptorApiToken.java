@@ -1,4 +1,4 @@
-package clean.internet.restapi.common.intercepter;
+package clean.internet.restapi.common.interceptor;
 
 import ch.qos.logback.classic.Logger;
 import clean.internet.restapi.common.exception.UnAuthorizedException;
