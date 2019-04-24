@@ -2,7 +2,7 @@ package clean.internet.restapi.service;
 
 import clean.internet.restapi.model.json.BoardData;
 import clean.internet.restapi.model.raw.CrwData;
-import clean.internet.restapi.repository.CrwDcDataRepository;
+import clean.internet.restapi.repository.CrwDataRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,13 @@ import java.util.List;
 public class BoardService {
 
     @Autowired
-    CrwDcDataRepository crwDcDataRepository;
+    CrwDataRepository crwDataRepository;
 
     @Autowired
     ObjectMapper mapper;
 
     public String getBoardData(int begin, int count) throws IOException {
-        List<CrwData> rawData = crwDcDataRepository.getBoardDataByPaging(begin, count);
+        List<CrwData> rawData = crwDataRepository.getBoardDataByPaging(begin, count);
         List<BoardData> boardDataList = new ArrayList<>();
 
         rawData.forEach(
