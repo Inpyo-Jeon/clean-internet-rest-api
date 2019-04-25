@@ -1,4 +1,4 @@
-package clean.internet.restapi.common.intercepter;
+package clean.internet.restapi.common.interceptor;
 
 import ch.qos.logback.classic.Logger;
 import clean.internet.restapi.common.exception.UnAuthorizedException;
@@ -21,12 +21,15 @@ public class InterceptorApiToken extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String requestApiToken = request.getHeader("api-token");
-        logger.info("request api-token", requestApiToken);
+        String requestApiToken = request.getHeader("Api-Token");
 
-        if (Optional.ofNullable(apiTokenRepository.getApiTokenDataByApiToken(requestApiToken)).isPresent()) {
+        if (Optional.ofNullable(requestApiToken)
+                .filter(s -> !s.isEmpty())
+                .map(s -> apiTokenRepository.getApiTokenDataByApiToken(s))
+                .isPresent()) {
             return true;
         } else {
+            logger.error("request Api-Token exception : ", requestApiToken);
             throw new UnAuthorizedException();
         }
     }
