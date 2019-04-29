@@ -17,9 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
-import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
-import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
-import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
+import static java.time.temporal.TemporalAdjusters.*;
 
 @Service
 public class GraphService {
@@ -36,6 +34,21 @@ public class GraphService {
         Date end = sdf.parse(e);
 
         List<CrwLineGraph> crwLineGraphList = crwDataCustomRepository.getLineGraphDataForDay(begin, end);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        mapper.writeValue(out, crwLineGraphList);
+
+        return new String(out.toByteArray());
+    }
+
+    public String getLineGraphDataForWeek(String b, String e) throws IOException {
+        Date begin = Date.from(getFirstDayOfMonth(b)
+                .atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        Date end = Date.from(getLastDayOfMonth(e)
+                .atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        List<CrwLineGraph> crwLineGraphList = crwDataCustomRepository.getLineGraphDataForWeek(begin, end);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         mapper.writeValue(out, crwLineGraphList);

@@ -33,7 +33,7 @@ public class GraphController {
 
     @RequestMapping(value = "/data/graph/line", method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", required = true, example = "day", value = "조회할 타입", paramType = "query", dataType = "string", allowableValues = "day, month, year")
+            @ApiImplicitParam(name = "type", required = true, example = "day", value = "조회할 타입", paramType = "query", dataType = "string", allowableValues = "day, week, month, year")
             , @ApiImplicitParam(name = "begin", required = true, example = "2019-01-01", value = "조회 시작 날 (YYYY-MM-DD)", paramType = "query", dataType = "string")
             , @ApiImplicitParam(name = "end", required = true, example = "2019-02-01", value = "조회 마지막 날 (YYYY-MM-DD)", paramType = "query", dataType = "string")
     })
@@ -52,6 +52,9 @@ public class GraphController {
             switch (periodType) {
                 case DAY:
                     data = graphService.getLineGraphDataForDay(begin, end);
+                    break;
+                case WEEK:
+                    data = graphService.getLineGraphDataForWeek(begin, end);
                     break;
                 case MONTH:
                     data = graphService.getLineGraphDataForMonth(begin, end);
