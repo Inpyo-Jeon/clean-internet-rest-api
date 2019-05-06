@@ -29,7 +29,7 @@ public class CrwDataCustomRepository {
     }
 
     public List<CrwLineGraph> getLineGraphDataForWeek(Date begin, Date end) {
-        Query query = em.createNativeQuery("SELECT CONCAT(DATE_FORMAT(DATE, \"%Y\"), '-', LPAD(WEEK(DATE), 2, '0')) AS dateTime , COUNT(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY dateTime ORDER BY dateTime DESC");
+        Query query = em.createNativeQuery("SELECT CONCAT(DATE_FORMAT(DATE, \"%Y\"), '-', CONCAT(LPAD(WEEK(DATE) + 1, 2, '0')), '주') AS dateTime, COUNT(*) AS totalCount FROM crw_data WHERE DATE(DATE) BETWEEN :begin AND :end GROUP BY dateTime ORDER BY dateTime DESC");
         query = setAliasLineGraphForPeriod(query, begin, end);
 
         List<CrwLineGraph> items = (List<CrwLineGraph>) query.getResultList();
