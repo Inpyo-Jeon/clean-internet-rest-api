@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 public class TokenizedService {
 
-    TokenizedDataRepository tokenizedDataRepository;
-    ObjectMapper mapper;
+    private TokenizedDataRepository tokenizedDataRepository;
+    private ObjectMapper mapper;
 
-    private TokenizedService(TokenizedDataRepository tokenizedDataRepository, ObjectMapper mapper) {
+    public TokenizedService(TokenizedDataRepository tokenizedDataRepository, ObjectMapper mapper) {
         this.tokenizedDataRepository = tokenizedDataRepository;
         this.mapper = mapper;
     }

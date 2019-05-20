@@ -21,10 +21,10 @@ import static java.time.temporal.TemporalAdjusters.*;
 @Service
 public class GraphService {
 
-    CrwDataCustomRepository crwDataCustomRepository;
-    ObjectMapper mapper;
+    private CrwDataCustomRepository crwDataCustomRepository;
+    private ObjectMapper mapper;
 
-    private GraphService(CrwDataCustomRepository crwDataCustomRepository, ObjectMapper mapper) {
+    public GraphService(CrwDataCustomRepository crwDataCustomRepository, ObjectMapper mapper) {
         this.crwDataCustomRepository = crwDataCustomRepository;
         this.mapper = mapper;
     }

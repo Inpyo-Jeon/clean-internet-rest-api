@@ -17,9 +17,9 @@ import java.util.List;
 @Component
 public class NotifierSlack {
 
-    RestTemplate restTemplate;
-    ObjectMapper mapper;
-    HttpHeaders httpHeaders;
+    private RestTemplate restTemplate;
+    private ObjectMapper mapper;
+    private HttpHeaders httpHeaders;
 
     @Value("${common.notification.exception.webhook-url}")
     String webHookUrl;
@@ -33,7 +33,7 @@ public class NotifierSlack {
     @Value("${spring.profiles.active}")
     String profile;
 
-    private NotifierSlack(RestTemplate restTemplate, ObjectMapper mapper, HttpHeaders httpHeaders) {
+    public NotifierSlack(RestTemplate restTemplate, ObjectMapper mapper, HttpHeaders httpHeaders) {
         this.restTemplate = restTemplate;
         this.mapper = mapper;
         this.httpHeaders = httpHeaders;
