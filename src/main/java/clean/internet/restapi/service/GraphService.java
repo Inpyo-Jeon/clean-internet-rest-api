@@ -4,7 +4,6 @@ import clean.internet.restapi.model.raw.CrwLineGraph;
 import clean.internet.restapi.model.raw.CrwPieGraph;
 import clean.internet.restapi.repository.CrwDataCustomRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -22,11 +21,13 @@ import static java.time.temporal.TemporalAdjusters.*;
 @Service
 public class GraphService {
 
-    @Autowired
     CrwDataCustomRepository crwDataCustomRepository;
-
-    @Autowired
     ObjectMapper mapper;
+
+    private GraphService(CrwDataCustomRepository crwDataCustomRepository, ObjectMapper mapper) {
+        this.crwDataCustomRepository = crwDataCustomRepository;
+        this.mapper = mapper;
+    }
 
     public String getLineGraphDataForDay(String b, String e) throws IOException, ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

@@ -16,11 +16,13 @@ import java.util.List;
 @Service
 public class BoardService {
 
-    @Autowired
     CrwDataRepository crwDataRepository;
-
-    @Autowired
     ObjectMapper mapper;
+
+    private BoardService(CrwDataRepository crwDataRepository, ObjectMapper mapper) {
+        this.crwDataRepository = crwDataRepository;
+        this.mapper = mapper;
+    }
 
     public String getBoardData(int begin, int count) throws IOException {
         List<CrwData> rawData = crwDataRepository.getBoardDataByPaging(begin, count);
