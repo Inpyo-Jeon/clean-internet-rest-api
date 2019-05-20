@@ -3,7 +3,6 @@ package clean.internet.restapi.util;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,14 +17,9 @@ import java.util.List;
 @Component
 public class NotifierSlack {
 
-    @Autowired
-    RestTemplate restTemplate;
-
-    @Autowired
-    ObjectMapper mapper;
-
-    @Autowired
-    HttpHeaders httpHeaders;
+    private RestTemplate restTemplate;
+    private ObjectMapper mapper;
+    private HttpHeaders httpHeaders;
 
     @Value("${common.notification.exception.webhook-url}")
     String webHookUrl;
@@ -38,6 +32,12 @@ public class NotifierSlack {
 
     @Value("${spring.profiles.active}")
     String profile;
+
+    public NotifierSlack(RestTemplate restTemplate, ObjectMapper mapper, HttpHeaders httpHeaders) {
+        this.restTemplate = restTemplate;
+        this.mapper = mapper;
+        this.httpHeaders = httpHeaders;
+    }
 
     public class basicData {
         String username;

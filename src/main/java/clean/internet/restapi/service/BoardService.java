@@ -5,7 +5,6 @@ import clean.internet.restapi.model.raw.CrwData;
 import clean.internet.restapi.repository.CrwDataRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -16,11 +15,13 @@ import java.util.List;
 @Service
 public class BoardService {
 
-    @Autowired
-    CrwDataRepository crwDataRepository;
+    private CrwDataRepository crwDataRepository;
+    private ObjectMapper mapper;
 
-    @Autowired
-    ObjectMapper mapper;
+    public BoardService(CrwDataRepository crwDataRepository, ObjectMapper mapper) {
+        this.crwDataRepository = crwDataRepository;
+        this.mapper = mapper;
+    }
 
     public String getBoardData(int begin, int count) throws IOException {
         List<CrwData> rawData = crwDataRepository.getBoardDataByPaging(begin, count);
